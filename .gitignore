@@ -1,0 +1,36 @@
+*.class
+
+.cache
+.classpath
+.project
+.settings
+.lib/
+.gradle/
+dist/*
+target/
+build/
+lib_managed/
+src_managed/
+project/boot/
+project/plugins/project/
+*.log
+
+# Scala-IDE specific
+.scala_dependencies
+.worksheet
+
+# IntelliJ specific
+.idea
+.idea_modules/
+/journal
+/bin/
+out/
+*.iml
+*.ipr
+*.iws
+
+# Werker
+_builds/
+_cache/
+_projects/
+_steps/
