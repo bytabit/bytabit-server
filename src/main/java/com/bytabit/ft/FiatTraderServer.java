@@ -11,7 +11,7 @@ import java.util.Arrays;
 @SpringBootApplication
 public class FiatTraderServer {
 
-    public static void main(final String... args) {
+    public static void main(String[] args) {
         SpringApplication.run(FiatTraderServer.class, args);
     }
 

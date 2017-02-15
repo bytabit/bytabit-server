@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-//import org.apache.tools.ant.filters.ReplaceTokens
+import org.apache.tools.ant.filters.ReplaceTokens
 
 buildscript {
     repositories {
@@ -28,12 +28,14 @@ buildscript {
     dependencies {
         classpath 'com.palantir:gradle-gitsemver:0.6.0'
         classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.1.RELEASE")
+        classpath('se.transmode.gradle:gradle-docker:1.2')
     }
 }
 
 apply plugin: 'application'
 apply plugin: 'gitsemver'
 apply plugin: 'org.springframework.boot'
+apply plugin: 'docker'
 
 repositories {
     mavenCentral()
@@ -48,11 +50,11 @@ jar {
     version = semver
 }
 
-//processResources {
-//    filesMatching("*.properties") {
-//        filter ReplaceTokens, tokens: [VERSION: semver]
-//    }
-//}
+processResources {
+    filesMatching("Dockerfile") {
+        filter ReplaceTokens, tokens: [VERSION: semver]
+    }
+}
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -67,5 +69,21 @@ dependencies {
     // tag::actuator[]
     compile("org.springframework.boot:spring-boot-starter-actuator")
     // end::actuator[]
-    testCompile("junit:junit")
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+}
+
+group = 'bytabit'
+
+task buildDocker(type: Docker, dependsOn: build) {
+    push = true
+    applicationName = jar.baseName
+    dockerfile = file('src/main/docker/Dockerfile')
+    doFirst {
+        copy {
+            from jar
+            into stageDir
+        }
+    }
 }
