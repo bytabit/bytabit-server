@@ -32,10 +32,14 @@ buildscript {
     }
 }
 
-apply plugin: 'application'
+plugins {
+    id 'org.springframework.boot' version '1.5.1.RELEASE'
+    id 'java'
+}
+
 apply plugin: 'gitsemver'
-apply plugin: 'org.springframework.boot'
 apply plugin: 'docker'
+
 
 repositories {
     mavenCentral()
@@ -60,18 +64,12 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
-    // tag::jetty[]
-    compile("org.springframework.boot:spring-boot-starter-web") {
-        exclude module: "spring-boot-starter-tomcat"
-    }
-    compile("org.springframework.boot:spring-boot-starter-jetty")
-    // end::jetty[]
-    // tag::actuator[]
-    compile("org.springframework.boot:spring-boot-starter-actuator")
-    // end::actuator[]
-    compile("org.springframework.boot:spring-boot-starter-actuator")
-
-    testCompile("org.springframework.boot:spring-boot-starter-test")
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-starter-actuator'
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+    compile 'org.postgresql:postgresql'
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
 }
 
 group = 'bytabit'
