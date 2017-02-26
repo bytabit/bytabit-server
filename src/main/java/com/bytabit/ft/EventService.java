@@ -11,11 +11,12 @@ public class EventService {
     @Autowired
     private EventRepo eventRepo;
 
-    public Event post(Event event) {
-        return eventRepo.save(event);
+    public PostedEvent post(PostedEvent postedEvent) {
+        postedEvent.setPosted(LocalDateTime.now());
+        return eventRepo.save(postedEvent);
     }
 
-    public Iterable<Event> findAll(LocalDateTime since) {
+    public Iterable<PostedEvent> findAll(LocalDateTime since) {
         if (since == null) {
             return eventRepo.findAll();
         } else {

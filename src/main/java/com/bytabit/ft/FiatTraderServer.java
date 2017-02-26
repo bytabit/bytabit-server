@@ -26,7 +26,6 @@ public class FiatTraderServer {
             for (String beanName : beanNames) {
                 System.out.println(beanName);
             }
-
         };
     }
 }

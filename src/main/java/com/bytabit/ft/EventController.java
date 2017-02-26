@@ -1,8 +1,6 @@
 package com.bytabit.ft;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,24 +23,18 @@ public class EventController {
     private static ObjectMapper mapper = new ObjectMapper();
 
     @RequestMapping(method = GET, produces = "application/json")
-    public String getEvents(@RequestParam(required = false) String since) throws IOException {
+    public Iterable<PostedEvent> getEvents(@RequestParam(required = false) String since) throws IOException {
 
         LocalDateTime sinceDateTime = null;
         if (since != null && since.length() > 0) {
             sinceDateTime = LocalDateTime.parse(since);
         }
-        ArrayNode arrayNode = mapper.createArrayNode();
-        for (Event e : eventService.findAll(sinceDateTime)) {
-            ObjectNode objectNode = e.getObjectNode();
-            arrayNode.add(objectNode);
-        }
-        return arrayNode.toString();
+        return eventService.findAll(sinceDateTime);
     }
 
     @RequestMapping(method = POST, produces = "application/json", consumes = "application/json")
-    public String postEvent(@RequestBody String json) throws IOException {
-
-        return eventService.post(new Event(json)).getJson();
+    public PostedEvent postEvent(@RequestBody PostedEvent postedEvent) throws IOException {
+        return eventService.post(postedEvent);
     }
 
 }

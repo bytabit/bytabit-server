@@ -5,7 +5,7 @@ Copyright 2016 Steven Myers
 Application framework support, including actor and streams concurrency model,
 persistence, and HTTP and JSON communications is provided by the akka-actor,
 akka-persistence, leveldb, leveldbjni-all, akka-http-experimental, and
-akka-http-spray-json-experimental libraries.  The original software and their
+akka-http-spray-data-experimental libraries.  The original software and their
 licenses are available here:
 
 https://github.com/akka/akka

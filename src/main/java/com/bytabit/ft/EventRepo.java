@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 
 @Repository
-public interface EventRepo extends CrudRepository<Event, Long> {
+public interface EventRepo extends CrudRepository<PostedEvent, Long> {
 
-    @Query("SELECT e FROM Event e WHERE e.posted > :since")
-    Iterable<Event> findSince(@Param("since") LocalDateTime since);
+    @Query("SELECT e FROM PostedEvent e WHERE e.posted > :since")
+    Iterable<PostedEvent> findSince(@Param("since") LocalDateTime since);
 }
