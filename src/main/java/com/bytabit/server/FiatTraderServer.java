@@ -1,4 +1,4 @@
-package com.bytabit.ft;
+package com.bytabit.server;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

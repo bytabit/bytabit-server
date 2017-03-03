@@ -1,4 +1,4 @@
-package com.bytabit.ft;
+package com.bytabit.server;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
