@@ -11,14 +11,11 @@ public class Profile {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
-    @Column
+    @Column(nullable = false)
     private String pubKey;
 
-    @Column
-    private Boolean isArbitrator;
+    @Column(nullable = false)
+    private Boolean isArbitrator = Boolean.FALSE;
 
     @Column
     private String name;
@@ -26,18 +23,14 @@ public class Profile {
     @Column
     private String phoneNum;
 
-    @Column
+    @Column(nullable = false)
     private LocalDateTime created;
 
-    @Column
+    @Column(nullable = false)
     private LocalDateTime updated;
 
     @Column
     private LocalDateTime removed;
-
-    public Long getId() {
-        return id;
-    }
 
     public String getPubKey() {
         return pubKey;
@@ -65,10 +58,6 @@ public class Profile {
 
     public LocalDateTime getRemoved() {
         return removed;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public void setPubKey(String pubKey) {

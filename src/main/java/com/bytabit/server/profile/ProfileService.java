@@ -37,7 +37,7 @@ public class ProfileService {
         return saved.orElseGet(null);
     }
 
-    public Iterable<Profile> findAll() {
-        return profileRepo.findAll();
+    public Iterable<Profile> findAll(Boolean isArbitrator) {
+        return profileRepo.findByIsArbitrator(isArbitrator);
     }
 }

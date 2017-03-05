@@ -9,4 +9,6 @@ import java.util.Optional;
 public interface ProfileRepo extends CrudRepository<Profile, Long> {
 
     Optional<Profile> findOneByPubKey(String pubKey);
+
+    Iterable<Profile> findByIsArbitrator(Boolean isArbitrator);
 }

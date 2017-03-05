@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
@@ -29,12 +28,7 @@ public class ProfileController {
     }
 
     @RequestMapping(method = GET, produces = "application/json")
-    public Iterable<Profile> getAll(@RequestParam(required = false) String since) throws IOException {
-
-        LocalDateTime sinceDateTime = null;
-        if (since != null && since.length() > 0) {
-            sinceDateTime = LocalDateTime.parse(since);
-        }
-        return profileService.findAll();
+    public Iterable<Profile> getAll(@RequestParam(required = false) Boolean isArbitrator) throws IOException {
+        return profileService.findAll(isArbitrator);
     }
 }
