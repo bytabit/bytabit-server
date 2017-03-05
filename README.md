@@ -25,6 +25,16 @@ gradle run
 2. Import gradle project in IntelliJ
 3. Verify the project JDK and Java Inspections settings are correct
 
+### Build Server Docker Image
+
+1. Commit any uncommitted code and add version label 
+
+2. Build docker image
+
+    ```
+    mvn buildDocker
+    ```
+
 ### Testnet In a Box via Docker
 
 1. Pull bitcoin-testnet-box docker image
