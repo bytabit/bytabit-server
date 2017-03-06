@@ -34,6 +34,14 @@ gradle run
     ```
     mvn buildDocker
     ```
+    
+3. Confirm docker container created
+
+    ```
+    docker images
+    ```
+    
+4. Start docker container
 
 ### Testnet In a Box via Docker
 
