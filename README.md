@@ -32,7 +32,7 @@ gradle run
 2. Build docker image
 
     ```
-    mvn buildDocker
+    gradle clean buildDocker
     ```
     
 3. Confirm docker container created
@@ -42,6 +42,16 @@ gradle run
     ```
     
 4. Start docker container
+
+    ```
+    docker run -d -p 8080:8080 --expose 8080 --name server bytabit/fiat-trader-server:<VERSION>
+    ```
+    
+5. Start docker container with STDOUT (for trouble shooting)
+   
+   ```
+   docker run -p 8080:8080 --expose 8080 --name server -a STDOUT -t bytabit/fiat-trader-server:<VERSION>
+   ```
 
 ### Testnet In a Box via Docker
 
@@ -58,6 +68,32 @@ gradle run
     ```
 
 3. Follow bitcoin-testnet-box [README.md](https://github.com/freewil/bitcoin-testnet-box) instructions
+
+### Postgresql
+
+1. Edit ```postgresql.conf``` and add: 
+
+    ```
+    listen_addresses = '*'
+    ```
+
+2. Edit ```pg_hba.conf``` and add:
+
+    ```
+    host 	bytabit 	bytabit 	192.168.0.11/32		trust 
+    ```
+
+3. Create **bytabit** user and password:
+ 
+    ```
+    CREATE USER bytabit WITH SUPERUSER PASSWORD 'bytabit@123'
+    ```
+
+4. Create empty **bytabit** database:
+ 
+    ```
+    CREATE DATABASE bytabit
+    ``` 
 
 ### Versioning
 
