@@ -80,7 +80,7 @@ gradle run
 2. Edit ```pg_hba.conf``` and add:
 
     ```
-    host 	bytabit 	bytabit 	192.168.0.11/32		trust 
+    host 	bytabit 	bytabit 	192.168.0.13/32		trust 
     ```
 
 3. Create **bytabit** user and password:
