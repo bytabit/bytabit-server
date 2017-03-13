@@ -9,13 +9,17 @@ import java.io.IOException;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @RestController
-@RequestMapping("/api/v1/profiles")
+@RequestMapping("/v1/profiles")
 public class ProfileController {
 
-    @Autowired
-    private ProfileService profileService;
+    private final ProfileService profileService;
 
     private static ObjectMapper mapper = new ObjectMapper();
+
+    @Autowired
+    public ProfileController(ProfileService profileService) {
+        this.profileService = profileService;
+    }
 
     @RequestMapping(method = POST, produces = "application/json", consumes = "application/json")
     public Profile post(@RequestBody Profile profile) {
