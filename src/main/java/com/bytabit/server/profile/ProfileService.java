@@ -10,7 +10,7 @@ import java.util.Optional;
 public class ProfileService {
 
     @Autowired
-    private ProfileRepo profileRepo;
+    private ProfileRepository profileRepo;
 
 
 
@@ -18,6 +18,10 @@ public class ProfileService {
         profile.setCreated(LocalDateTime.now());
         profile.setUpdated(LocalDateTime.now());
         return profileRepo.save(profile);
+    }
+
+    public Iterable<Profile> retrieve(Boolean isArbitrator) {
+        return profileRepo.findByIsArbitrator(isArbitrator);
     }
 
     public Profile update(String pubkey, Profile profile) {
@@ -37,9 +41,5 @@ public class ProfileService {
 
         // TODO get or throw once exception handling in place
         return saved.orElseGet(null);
-    }
-
-    public Iterable<Profile> findAll(Boolean isArbitrator) {
-        return profileRepo.findByIsArbitrator(isArbitrator);
     }
 }

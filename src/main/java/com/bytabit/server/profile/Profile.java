@@ -4,14 +4,13 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "profile", indexes = {@Index(name = "profile_pubkey", columnList = "pubKey", unique = true)})
+@Table
 public class Profile {
 
     protected Profile() {
     }
 
     @Id
-    @Column(nullable = false)
     private String pubKey;
 
     @Column(nullable = false)
@@ -30,7 +29,7 @@ public class Profile {
     private LocalDateTime updated;
 
     @Column
-    private LocalDateTime removed;
+    private LocalDateTime deleted;
 
     public String getPubKey() {
         return pubKey;
@@ -56,8 +55,8 @@ public class Profile {
         return updated;
     }
 
-    public LocalDateTime getRemoved() {
-        return removed;
+    public LocalDateTime getDeleted() {
+        return deleted;
     }
 
     public void setPubKey(String pubKey) {
@@ -84,7 +83,7 @@ public class Profile {
         this.updated = updated;
     }
 
-    public void setRemoved(LocalDateTime removed) {
-        this.removed = removed;
+    public void setDeleted(LocalDateTime deleted) {
+        this.deleted = deleted;
     }
 }

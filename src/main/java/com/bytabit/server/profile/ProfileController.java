@@ -22,17 +22,17 @@ public class ProfileController {
     }
 
     @RequestMapping(method = POST, produces = "application/json", consumes = "application/json")
-    public Profile post(@RequestBody Profile profile) {
+    public Profile create(@RequestBody Profile profile) {
         return profileService.create(profile);
     }
 
-    @RequestMapping(path = "/{pubkey}", method = PUT, produces = "application/json", consumes = "application/json")
-    public Profile put(@PathVariable String pubkey, @RequestBody Profile profile) {
-        return profileService.update(pubkey, profile);
+    @RequestMapping(method = GET, produces = "application/json")
+    public Iterable<Profile> retrieve(@RequestParam(required = false) Boolean isArbitrator) throws IOException {
+        return profileService.retrieve(isArbitrator);
     }
 
-    @RequestMapping(method = GET, produces = "application/json")
-    public Iterable<Profile> getAll(@RequestParam(required = false) Boolean isArbitrator) throws IOException {
-        return profileService.findAll(isArbitrator);
+    @RequestMapping(path = "/{pubkey}", method = PUT, produces = "application/json", consumes = "application/json")
+    public Profile update(@PathVariable String pubkey, @RequestBody Profile profile) {
+        return profileService.update(pubkey, profile);
     }
 }
