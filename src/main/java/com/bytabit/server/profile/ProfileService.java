@@ -25,21 +25,24 @@ public class ProfileService {
     }
 
     public Profile update(String pubkey, Profile profile) {
-        Optional<Profile> saved = profileRepo.findOneByPubKey(pubkey).map(p -> {
+        Optional<Profile> found = profileRepo.findOneByPubKey(pubkey);
+
+        if (found.isPresent()) {
             if (profile.getIsArbitrator() != null) {
-                p.setIsArbitrator(profile.getIsArbitrator());
+                found.get().setIsArbitrator(profile.getIsArbitrator());
             }
             if (profile.getName() != null) {
-                p.setName(profile.getName());
+                found.get().setName(profile.getName());
             }
             if (profile.getPhoneNum() != null) {
-                p.setPhoneNum(profile.getPhoneNum());
+                found.get().setPhoneNum(profile.getPhoneNum());
             }
-            p.setUpdated(LocalDateTime.now());
-            return profileRepo.save(p);
-        });
-
-        // TODO get or throw once exception handling in place
-        return saved.orElseGet(null);
+            found.get().setUpdated(LocalDateTime.now());
+            return profileRepo.save(found.get());
+        } else {
+            // if not found create new
+            profile.setPubKey(pubkey);
+            return create(profile);
+        }
     }
 }
