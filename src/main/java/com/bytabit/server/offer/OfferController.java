@@ -1,9 +1,11 @@
 package com.bytabit.server.offer;
 
-import com.bytabit.server.profile.Profile;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 
@@ -28,8 +30,8 @@ public class OfferController {
     }
 
     @RequestMapping(method = GET, produces = "application/json")
-    public Iterable<Offer> retrieve() throws IOException {
-        return offerService.retrieve();
+    public Iterable<Offer> read() throws IOException {
+        return offerService.read();
     }
 
     @RequestMapping(path = "/{pubkey}", method = PUT, produces = "application/json", consumes = "application/json")

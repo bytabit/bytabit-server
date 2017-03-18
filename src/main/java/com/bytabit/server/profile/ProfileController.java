@@ -27,8 +27,8 @@ public class ProfileController {
     }
 
     @RequestMapping(method = GET, produces = "application/json")
-    public Iterable<Profile> retrieve(@RequestParam(required = false) Boolean isArbitrator) throws IOException {
-        return profileService.retrieve(isArbitrator);
+    public Iterable<Profile> read(@RequestParam(required = false) Boolean isArbitrator) throws IOException {
+        return profileService.read(isArbitrator);
     }
 
     @RequestMapping(path = "/{pubkey}", method = PUT, produces = "application/json", consumes = "application/json")

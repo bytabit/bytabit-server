@@ -13,15 +13,18 @@ public class ProfileService {
     private ProfileRepository profileRepo;
 
 
-
     public Profile create(Profile profile) {
         profile.setCreated(LocalDateTime.now());
         profile.setUpdated(LocalDateTime.now());
         return profileRepo.save(profile);
     }
 
-    public Iterable<Profile> retrieve(Boolean isArbitrator) {
-        return profileRepo.findByIsArbitrator(isArbitrator);
+    public Iterable<Profile> read(Boolean isArbitrator) {
+        if (isArbitrator == null) {
+            return profileRepo.findAll();
+        } else {
+            return profileRepo.findByIsArbitrator(isArbitrator);
+        }
     }
 
     public Profile update(String pubkey, Profile profile) {

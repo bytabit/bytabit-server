@@ -1,6 +1,5 @@
 package com.bytabit.server.offer;
 
-import com.bytabit.server.profile.Profile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +20,7 @@ public class OfferService {
         return offerRepository.save(offer);
     }
 
-    public Iterable<Offer> retrieve() {
+    public Iterable<Offer> read() {
         return offerRepository.findAll();
     }
 
