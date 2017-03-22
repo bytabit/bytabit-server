@@ -41,16 +41,22 @@ gradle run
     docker images
     ```
     
-4. Start docker container
-
-    ```
-    docker run -d -p 8080:8080 --expose 8080 --name server bytabit/fiat-trader-server:<VERSION>
-    ```
-    
-5. Start docker container with STDOUT (for trouble shooting)
+4. Remove old docker server
    
    ```
-   docker run -p 8080:8080 --expose 8080 --name server -a STDOUT -t bytabit/fiat-trader-server:<VERSION>
+   docker rm server
+   ```
+    
+5. Start docker container
+
+    ```
+    docker run -d -p 8080:8080 --expose 8080 --name server bytabit/bytabit-server:<VERSION>
+    ```
+    
+6. Start docker container with STDOUT (for trouble shooting)
+   
+   ```
+   docker run -p 8080:8080 --expose 8080 --name server -a STDOUT -t bytabit/bytabit-server:<VERSION>
    ```
 
 ### Testnet In a Box via Docker
