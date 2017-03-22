@@ -38,4 +38,9 @@ public class OfferController {
     public Offer update(@PathVariable String pubkey, @RequestBody Offer offer) {
         return offerService.update(pubkey, offer);
     }
+
+    @RequestMapping(path = "/{pubkey}", method = DELETE, produces = "application/json")
+    public Offer delete(@PathVariable String pubkey) {
+        return offerService.delete(pubkey);
+    }
 }
