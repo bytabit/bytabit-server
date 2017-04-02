@@ -25,6 +25,10 @@ gradle run
 2. Import gradle project in IntelliJ
 3. Verify the project JDK and Java Inspections settings are correct
 
+### Run locally with dev profile
+
+```bootRun -PprofileName=dev```
+
 ### Build Server Docker Image
 
 1. Commit any uncommitted code and add version label 
