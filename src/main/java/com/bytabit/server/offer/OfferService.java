@@ -13,33 +13,33 @@ public class OfferService {
     private OfferRepository offerRepository;
 
 
-    public Offer create(Offer offer) {
-        offer.setCreated(LocalDateTime.now());
-        offer.setUpdated(LocalDateTime.now());
-        return offerRepository.save(offer);
+    public SellOffer create(SellOffer sellOffer) {
+        sellOffer.setCreated(LocalDateTime.now());
+        sellOffer.setUpdated(LocalDateTime.now());
+        return offerRepository.save(sellOffer);
     }
 
-    public Iterable<Offer> read() {
+    public Iterable<SellOffer> read() {
         return offerRepository.findByDeletedIsNull();
     }
 
-    public Offer update(String pubkey, Offer offer) {
-        Optional<Offer> saved = offerRepository.findOneByPubKeyAndDeletedIsNull(pubkey)
+    public SellOffer update(String sellerEscrowPubkey, SellOffer sellOffer) {
+        Optional<SellOffer> saved = offerRepository.findOneBySellerEscrowPubKeyAndDeletedIsNull(sellerEscrowPubkey)
                 .map(o -> {
-                    if (offer.getCurrencyCode() != null) {
-                        o.setCurrencyCode(offer.getCurrencyCode());
+                    if (sellOffer.getCurrencyCode() != null) {
+                        o.setCurrencyCode(sellOffer.getCurrencyCode());
                     }
-                    if (offer.getPaymentMethod() != null) {
-                        o.setPaymentMethod(offer.getPaymentMethod());
+                    if (sellOffer.getPaymentMethod() != null) {
+                        o.setPaymentMethod(sellOffer.getPaymentMethod());
                     }
-                    if (offer.getMinAmount() != null) {
-                        o.setMinAmount(offer.getMinAmount());
+                    if (sellOffer.getMinAmount() != null) {
+                        o.setMinAmount(sellOffer.getMinAmount());
                     }
-                    if (offer.getMaxAmount() != null) {
-                        o.setMaxAmount(offer.getMaxAmount());
+                    if (sellOffer.getMaxAmount() != null) {
+                        o.setMaxAmount(sellOffer.getMaxAmount());
                     }
-                    if (offer.getPrice() != null) {
-                        o.setPrice(offer.getPrice());
+                    if (sellOffer.getPrice() != null) {
+                        o.setPrice(sellOffer.getPrice());
                     }
                     o.setUpdated(LocalDateTime.now());
                     return offerRepository.save(o);
@@ -49,8 +49,8 @@ public class OfferService {
         return saved.orElseGet(null);
     }
 
-    public Offer delete(String pubkey) {
-        Optional<Offer> saved = offerRepository.findOneByPubKeyAndDeletedIsNull(pubkey)
+    public SellOffer delete(String sellerEscrowPubkey) {
+        Optional<SellOffer> saved = offerRepository.findOneBySellerEscrowPubKeyAndDeletedIsNull(sellerEscrowPubkey)
                 .map(o -> {
                     o.setDeleted(LocalDateTime.now());
                     return offerRepository.save(o);

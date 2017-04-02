@@ -6,16 +6,19 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table
-public class Offer {
+public class SellOffer {
 
-    protected Offer() {
+    protected SellOffer() {
     }
 
     @Id
-    private String pubKey;
+    private String sellerEscrowPubKey;
 
     @Column(nullable = false)
-    private String sellerPubKey;
+    private String sellerProfilePubKey;
+
+    @Column(nullable = false)
+    private String arbitratorProfilePubKey;
 
     @Column(nullable = false)
     private String currencyCode;
@@ -41,20 +44,28 @@ public class Offer {
     @Column
     private LocalDateTime deleted;
 
-    public String getPubKey() {
-        return pubKey;
+    public String getSellerEscrowPubKey() {
+        return sellerEscrowPubKey;
     }
 
-    public void setPubKey(String pubKey) {
-        this.pubKey = pubKey;
+    public void setSellerEscrowPubKey(String sellerEscrowPubKey) {
+        this.sellerEscrowPubKey = sellerEscrowPubKey;
     }
 
-    public String getSellerPubKey() {
-        return sellerPubKey;
+    public String getSellerProfilePubKey() {
+        return sellerProfilePubKey;
     }
 
-    public void setSellerPubKey(String sellerPubKey) {
-        this.sellerPubKey = sellerPubKey;
+    public void setSellerProfilePubKey(String sellerProfilePubKey) {
+        this.sellerProfilePubKey = sellerProfilePubKey;
+    }
+
+    public String getArbitratorProfilePubKey() {
+        return arbitratorProfilePubKey;
+    }
+
+    public void setArbitratorProfilePubKey(String arbitratorProfilePubKey) {
+        this.arbitratorProfilePubKey = arbitratorProfilePubKey;
     }
 
     public String getCurrencyCode() {
@@ -119,6 +130,24 @@ public class Offer {
 
     public void setDeleted(LocalDateTime deleted) {
         this.deleted = deleted;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("SellOffer{");
+        sb.append("sellerEscrowPubKey='").append(sellerEscrowPubKey).append('\'');
+        sb.append(", sellerProfilePubKey='").append(sellerProfilePubKey).append('\'');
+        sb.append(", arbitratorProfilePubKey='").append(arbitratorProfilePubKey).append('\'');
+        sb.append(", currencyCode='").append(currencyCode).append('\'');
+        sb.append(", paymentMethod='").append(paymentMethod).append('\'');
+        sb.append(", minAmount=").append(minAmount);
+        sb.append(", maxAmount=").append(maxAmount);
+        sb.append(", price=").append(price);
+        sb.append(", created=").append(created);
+        sb.append(", updated=").append(updated);
+        sb.append(", deleted=").append(deleted);
+        sb.append('}');
+        return sb.toString();
     }
 }
 

@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface OfferRepository extends CrudRepository<Offer, Long> {
+public interface OfferRepository extends CrudRepository<SellOffer, Long> {
 
-    Optional<Offer> findOneByPubKeyAndDeletedIsNull(String pubKey);
+    Optional<SellOffer> findOneBySellerEscrowPubKeyAndDeletedIsNull(String pubKey);
 
-    List<Offer> findByDeletedIsNull();
+    List<SellOffer> findByDeletedIsNull();
 }

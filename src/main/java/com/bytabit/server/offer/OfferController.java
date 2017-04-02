@@ -25,22 +25,22 @@ public class OfferController {
     }
 
     @RequestMapping(method = POST, produces = "application/json", consumes = "application/json")
-    public Offer create(@RequestBody Offer offer) {
-        return offerService.create(offer);
+    public SellOffer create(@RequestBody SellOffer sellOffer) {
+        return offerService.create(sellOffer);
     }
 
     @RequestMapping(method = GET, produces = "application/json")
-    public Iterable<Offer> read() throws IOException {
+    public Iterable<SellOffer> read() throws IOException {
         return offerService.read();
     }
 
-    @RequestMapping(path = "/{pubkey}", method = PUT, produces = "application/json", consumes = "application/json")
-    public Offer update(@PathVariable String pubkey, @RequestBody Offer offer) {
-        return offerService.update(pubkey, offer);
+    @RequestMapping(path = "/{sellerEscrowPubkey}", method = PUT, produces = "application/json", consumes = "application/json")
+    public SellOffer update(@PathVariable String sellerEscrowPubkey, @RequestBody SellOffer sellOffer) {
+        return offerService.update(sellerEscrowPubkey, sellOffer);
     }
 
-    @RequestMapping(path = "/{pubkey}", method = DELETE, produces = "application/json")
-    public Offer delete(@PathVariable String pubkey) {
-        return offerService.delete(pubkey);
+    @RequestMapping(path = "/{sellerEscrowPubkey}", method = DELETE, produces = "application/json")
+    public SellOffer delete(@PathVariable String sellerEscrowPubkey) {
+        return offerService.delete(sellerEscrowPubkey);
     }
 }
