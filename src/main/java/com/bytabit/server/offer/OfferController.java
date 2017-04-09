@@ -25,8 +25,13 @@ public class OfferController {
     }
 
     @RequestMapping(method = POST, produces = "application/json", consumes = "application/json")
-    public SellOffer create(@RequestBody SellOffer sellOffer) {
+    public SellOffer createSellOffer(@RequestBody SellOffer sellOffer) {
         return offerService.create(sellOffer);
+    }
+
+    @RequestMapping(path = "/{sellerEscrowPubkey}/buyRequests", method = POST, produces = "application/json", consumes = "application/json")
+    public BuyRequest createBuyRequest(@RequestBody BuyRequest buyRequest) {
+        return offerService.create(buyRequest);
     }
 
     @RequestMapping(method = GET, produces = "application/json")

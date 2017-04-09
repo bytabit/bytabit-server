@@ -10,21 +10,29 @@ import java.util.Optional;
 public class OfferService {
 
     @Autowired
-    private OfferRepository offerRepository;
+    private SellOfferRepository sellOfferRepository;
 
+    @Autowired
+    private BuyRequestRepository buyRequestRepository;
 
     public SellOffer create(SellOffer sellOffer) {
         sellOffer.setCreated(LocalDateTime.now());
         sellOffer.setUpdated(LocalDateTime.now());
-        return offerRepository.save(sellOffer);
+        return sellOfferRepository.save(sellOffer);
+    }
+
+    public BuyRequest create(BuyRequest buyRequest) {
+        buyRequest.setCreated(LocalDateTime.now());
+        buyRequest.setUpdated(LocalDateTime.now());
+        return buyRequestRepository.save(buyRequest);
     }
 
     public Iterable<SellOffer> read() {
-        return offerRepository.findByDeletedIsNull();
+        return sellOfferRepository.findByDeletedIsNull();
     }
 
     public SellOffer update(String sellerEscrowPubkey, SellOffer sellOffer) {
-        Optional<SellOffer> saved = offerRepository.findOneBySellerEscrowPubKeyAndDeletedIsNull(sellerEscrowPubkey)
+        Optional<SellOffer> saved = sellOfferRepository.findOneBySellerEscrowPubKeyAndDeletedIsNull(sellerEscrowPubkey)
                 .map(o -> {
                     if (sellOffer.getCurrencyCode() != null) {
                         o.setCurrencyCode(sellOffer.getCurrencyCode());
@@ -42,7 +50,7 @@ public class OfferService {
                         o.setPrice(sellOffer.getPrice());
                     }
                     o.setUpdated(LocalDateTime.now());
-                    return offerRepository.save(o);
+                    return sellOfferRepository.save(o);
                 });
 
         // TODO get or throw once exception handling in place
@@ -50,10 +58,10 @@ public class OfferService {
     }
 
     public SellOffer delete(String sellerEscrowPubkey) {
-        Optional<SellOffer> saved = offerRepository.findOneBySellerEscrowPubKeyAndDeletedIsNull(sellerEscrowPubkey)
+        Optional<SellOffer> saved = sellOfferRepository.findOneBySellerEscrowPubKeyAndDeletedIsNull(sellerEscrowPubkey)
                 .map(o -> {
                     o.setDeleted(LocalDateTime.now());
-                    return offerRepository.save(o);
+                    return sellOfferRepository.save(o);
                 });
 
         // TODO get or throw once exception handling in place
