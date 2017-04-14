@@ -13,14 +13,14 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @RestController
 @RequestMapping("/v1/offers")
-public class OfferController {
+public class SellOfferController {
 
-    private final OfferService offerService;
+    private final SellOfferService offerService;
 
     private static ObjectMapper mapper = new ObjectMapper();
 
     @Autowired
-    public OfferController(OfferService offerService) {
+    public SellOfferController(SellOfferService offerService) {
         this.offerService = offerService;
     }
 
@@ -29,8 +29,8 @@ public class OfferController {
         return offerService.create(sellOffer);
     }
 
-    @RequestMapping(path = "/{sellerEscrowPubkey}/buyRequests", method = POST, produces = "application/json", consumes = "application/json")
-    public BuyRequest createBuyRequest(@RequestBody BuyRequest buyRequest) {
+    @RequestMapping(method = POST, path = "/{sellerEscrowPubkey}/buyRequests", produces = "application/json", consumes = "application/json")
+    public BuyRequest createBuyRequest(@PathVariable String sellerEscrowPubkey, @RequestBody BuyRequest buyRequest) {
         return offerService.create(buyRequest);
     }
 
