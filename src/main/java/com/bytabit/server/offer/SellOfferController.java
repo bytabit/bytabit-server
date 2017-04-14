@@ -29,11 +29,6 @@ public class SellOfferController {
         return offerService.create(sellOffer);
     }
 
-    @RequestMapping(method = POST, path = "/{sellerEscrowPubkey}/buyRequests", produces = "application/json", consumes = "application/json")
-    public BuyRequest createBuyRequest(@PathVariable String sellerEscrowPubkey, @RequestBody BuyRequest buyRequest) {
-        return offerService.create(buyRequest);
-    }
-
     @RequestMapping(method = GET, produces = "application/json")
     public Iterable<SellOffer> read() throws IOException {
         return offerService.read();

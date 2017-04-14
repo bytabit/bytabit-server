@@ -12,19 +12,10 @@ public class SellOfferService {
     @Autowired
     private SellOfferRepository sellOfferRepository;
 
-    @Autowired
-    private BuyRequestRepository buyRequestRepository;
-
     public SellOffer create(SellOffer sellOffer) {
         sellOffer.setCreated(LocalDateTime.now());
         sellOffer.setUpdated(LocalDateTime.now());
         return sellOfferRepository.save(sellOffer);
-    }
-
-    public BuyRequest create(BuyRequest buyRequest) {
-        buyRequest.setCreated(LocalDateTime.now());
-        buyRequest.setUpdated(LocalDateTime.now());
-        return buyRequestRepository.save(buyRequest);
     }
 
     public Iterable<SellOffer> read() {
