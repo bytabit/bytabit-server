@@ -8,7 +8,5 @@ import java.util.List;
 @Repository
 public interface BuyRequestRepository extends CrudRepository<BuyRequest, Long> {
 
-    List<BuyRequest> findBySellerEscrowPubKeyAndDeletedIsNull(String pubKey);
-
-    List<BuyRequest> findByDeletedIsNull();
+    List<BuyRequest> findBySellerEscrowPubKey(String pubKey);
 }

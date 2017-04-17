@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Service
 public class SellOfferService {
@@ -19,43 +18,35 @@ public class SellOfferService {
     }
 
     public Iterable<SellOffer> read() {
-        return sellOfferRepository.findByDeletedIsNull();
+        return sellOfferRepository.findAll();
     }
 
     public SellOffer update(String sellerEscrowPubkey, SellOffer sellOffer) {
-        Optional<SellOffer> saved = sellOfferRepository.findOneBySellerEscrowPubKeyAndDeletedIsNull(sellerEscrowPubkey)
-                .map(o -> {
-                    if (sellOffer.getCurrencyCode() != null) {
-                        o.setCurrencyCode(sellOffer.getCurrencyCode());
-                    }
-                    if (sellOffer.getPaymentMethod() != null) {
-                        o.setPaymentMethod(sellOffer.getPaymentMethod());
-                    }
-                    if (sellOffer.getMinAmount() != null) {
-                        o.setMinAmount(sellOffer.getMinAmount());
-                    }
-                    if (sellOffer.getMaxAmount() != null) {
-                        o.setMaxAmount(sellOffer.getMaxAmount());
-                    }
-                    if (sellOffer.getPrice() != null) {
-                        o.setPrice(sellOffer.getPrice());
-                    }
-                    o.setUpdated(LocalDateTime.now());
-                    return sellOfferRepository.save(o);
-                });
-
+        SellOffer saved = sellOfferRepository.findOne(sellerEscrowPubkey);
+        if (saved != null) {
+            if (sellOffer.getCurrencyCode() != null) {
+                saved.setCurrencyCode(sellOffer.getCurrencyCode());
+            }
+            if (sellOffer.getPaymentMethod() != null) {
+                saved.setPaymentMethod(sellOffer.getPaymentMethod());
+            }
+            if (sellOffer.getMinAmount() != null) {
+                saved.setMinAmount(sellOffer.getMinAmount());
+            }
+            if (sellOffer.getMaxAmount() != null) {
+                saved.setMaxAmount(sellOffer.getMaxAmount());
+            }
+            if (sellOffer.getPrice() != null) {
+                saved.setPrice(sellOffer.getPrice());
+            }
+            saved.setUpdated(LocalDateTime.now());
+            return sellOfferRepository.save(saved);
+        }
         // TODO get or throw once exception handling in place
-        return saved.orElseGet(null);
+        return saved;
     }
 
-    public SellOffer delete(String sellerEscrowPubkey) {
-        Optional<SellOffer> saved = sellOfferRepository.findOneBySellerEscrowPubKeyAndDeletedIsNull(sellerEscrowPubkey)
-                .map(o -> {
-                    o.setDeleted(LocalDateTime.now());
-                    return sellOfferRepository.save(o);
-                });
-
-        // TODO get or throw once exception handling in place
-        return saved.orElseGet(null);
+    public void delete(String sellerEscrowPubkey) {
+        sellOfferRepository.delete(sellerEscrowPubkey);
     }
 }

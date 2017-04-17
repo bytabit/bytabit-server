@@ -25,7 +25,7 @@ public class SellOfferController {
     }
 
     @RequestMapping(method = POST, produces = "application/json", consumes = "application/json")
-    public SellOffer createSellOffer(@RequestBody SellOffer sellOffer) {
+    public SellOffer create(@RequestBody SellOffer sellOffer) {
         return offerService.create(sellOffer);
     }
 
@@ -40,7 +40,7 @@ public class SellOfferController {
     }
 
     @RequestMapping(path = "/{sellerEscrowPubkey}", method = DELETE, produces = "application/json")
-    public SellOffer delete(@PathVariable String sellerEscrowPubkey) {
-        return offerService.delete(sellerEscrowPubkey);
+    public void delete(@PathVariable String sellerEscrowPubkey) {
+        offerService.delete(sellerEscrowPubkey);
     }
 }

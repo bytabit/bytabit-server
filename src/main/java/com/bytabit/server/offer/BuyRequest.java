@@ -35,9 +35,6 @@ public class BuyRequest {
     @Column(nullable = false)
     private LocalDateTime updated;
 
-    @Column
-    private LocalDateTime deleted;
-
     public String getBuyerEscrowPubKey() {
         return buyerEscrowPubKey;
     }
@@ -94,14 +91,6 @@ public class BuyRequest {
         this.updated = updated;
     }
 
-    public LocalDateTime getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(LocalDateTime deleted) {
-        this.deleted = deleted;
-    }
-
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("BuyRequest{");
@@ -112,7 +101,6 @@ public class BuyRequest {
         sb.append(", buyerPayoutAddress='").append(buyerPayoutAddress).append('\'');
         sb.append(", created=").append(created);
         sb.append(", updated=").append(updated);
-        sb.append(", deleted=").append(deleted);
         sb.append('}');
         return sb.toString();
     }

@@ -1,6 +1,9 @@
 package com.bytabit.server.profile;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 @Entity
@@ -28,9 +31,6 @@ public class Profile {
     @Column(nullable = false)
     private LocalDateTime updated;
 
-    @Column
-    private LocalDateTime deleted;
-
     public String getPubKey() {
         return pubKey;
     }
@@ -55,10 +55,6 @@ public class Profile {
         return updated;
     }
 
-    public LocalDateTime getDeleted() {
-        return deleted;
-    }
-
     public void setPubKey(String pubKey) {
         this.pubKey = pubKey;
     }
@@ -81,9 +77,5 @@ public class Profile {
 
     public void setUpdated(LocalDateTime updated) {
         this.updated = updated;
-    }
-
-    public void setDeleted(LocalDateTime deleted) {
-        this.deleted = deleted;
     }
 }

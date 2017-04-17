@@ -1,6 +1,9 @@
 package com.bytabit.server.offer;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -40,9 +43,6 @@ public class SellOffer {
 
     @Column(nullable = false)
     private LocalDateTime updated;
-
-    @Column
-    private LocalDateTime deleted;
 
     public String getSellerEscrowPubKey() {
         return sellerEscrowPubKey;
@@ -124,14 +124,6 @@ public class SellOffer {
         this.updated = updated;
     }
 
-    public LocalDateTime getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(LocalDateTime deleted) {
-        this.deleted = deleted;
-    }
-
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("SellOffer{");
@@ -145,7 +137,6 @@ public class SellOffer {
         sb.append(", price=").append(price);
         sb.append(", created=").append(created);
         sb.append(", updated=").append(updated);
-        sb.append(", deleted=").append(deleted);
         sb.append('}');
         return sb.toString();
     }
