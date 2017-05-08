@@ -6,7 +6,11 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface BuyRequestRepository extends CrudRepository<BuyRequest, Long> {
+interface BuyRequestRepository extends CrudRepository<BuyRequest, String> {
 
-    List<BuyRequest> findBySellerEscrowPubKey(String pubKey);
+    List<BuyRequest> findBySellerEscrowPubKey(String sellerEscrowPubKey);
+
+    void deleteByBuyerEscrowPubKey(String buyerEscrowPubKey);
+
+    void deleteBySellerEscrowPubKey(String sellerEscrowPubKey);
 }

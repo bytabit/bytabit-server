@@ -3,23 +3,44 @@ package com.bytabit.server.offer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@Transactional
 public class BuyRequestService {
 
+    private final BuyRequestRepository buyRequestRepository;
+
     @Autowired
-    private BuyRequestRepository buyRequestRepository;
+    public BuyRequestService(BuyRequestRepository buyRequestRepository) {
+        this.buyRequestRepository = buyRequestRepository;
+    }
 
     public BuyRequest create(String sellerEscrowPubkey, BuyRequest buyRequest) {
         assert (sellerEscrowPubkey.equals(buyRequest.getSellerEscrowPubKey()));
-        buyRequest.setCreated(LocalDateTime.now());
-        buyRequest.setUpdated(LocalDateTime.now());
-        return buyRequestRepository.save(buyRequest);
+
+        BuyRequest newBuyRequest = BuyRequest.builder()
+                .btcAmount(buyRequest.getBtcAmount())
+                .buyerEscrowPubKey(buyRequest.getBuyerEscrowPubKey())
+                .buyerProfilePubKey(buyRequest.getBuyerProfilePubKey())
+                .buyerPayoutAddress(buyRequest.getBuyerPayoutAddress())
+                .sellerEscrowPubKey(buyRequest.getSellerEscrowPubKey())
+                .created(LocalDateTime.now())
+                .updated(LocalDateTime.now()).build();
+        return buyRequestRepository.save(newBuyRequest);
     }
 
     public List<BuyRequest> read(String sellerEscrowPubKey) {
         return buyRequestRepository.findBySellerEscrowPubKey(sellerEscrowPubKey);
+    }
+
+    public void delete(String buyerEscrowPubKey) {
+        buyRequestRepository.deleteByBuyerEscrowPubKey(buyerEscrowPubKey);
+    }
+
+    public void deleteForSellOffer(String sellerEscrowPubKey) {
+        buyRequestRepository.deleteBySellerEscrowPubKey(sellerEscrowPubKey);
     }
 }

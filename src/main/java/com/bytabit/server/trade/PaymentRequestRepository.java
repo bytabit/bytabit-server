@@ -1,8 +1,8 @@
-package com.bytabit.server.offer;
+package com.bytabit.server.trade;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-interface SellOfferRepository extends CrudRepository<SellOffer, String> {
+interface PaymentRequestRepository extends CrudRepository<PaymentRequest, String> {
 }

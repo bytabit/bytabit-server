@@ -1,6 +1,5 @@
 package com.bytabit.server.offer;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,15 +12,16 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @RestController
 @RequestMapping("/v1/offers")
-public class SellOfferController {
+class SellOfferController {
 
     private final SellOfferService offerService;
 
-    private static ObjectMapper mapper = new ObjectMapper();
+    private final BuyRequestService buyRequestService;
 
     @Autowired
-    public SellOfferController(SellOfferService offerService) {
+    public SellOfferController(SellOfferService offerService, BuyRequestService buyRequestService) {
         this.offerService = offerService;
+        this.buyRequestService = buyRequestService;
     }
 
     @RequestMapping(method = POST, produces = "application/json", consumes = "application/json")
@@ -41,6 +41,7 @@ public class SellOfferController {
 
     @RequestMapping(path = "/{sellerEscrowPubkey}", method = DELETE, produces = "application/json")
     public void delete(@PathVariable String sellerEscrowPubkey) {
+        buyRequestService.deleteForSellOffer(sellerEscrowPubkey);
         offerService.delete(sellerEscrowPubkey);
     }
 }

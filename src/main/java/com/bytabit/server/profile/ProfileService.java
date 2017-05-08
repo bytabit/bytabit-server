@@ -9,42 +9,58 @@ import java.util.Optional;
 @Service
 public class ProfileService {
 
+    private final ProfileRepository profileRepository;
+
     @Autowired
-    private ProfileRepository profileRepo;
+    public ProfileService(ProfileRepository profileRepository) {
+        this.profileRepository = profileRepository;
+    }
 
 
     public Profile create(Profile profile) {
-        profile.setCreated(LocalDateTime.now());
-        profile.setUpdated(LocalDateTime.now());
-        return profileRepo.save(profile);
+        Profile newProfile = Profile.builder()
+                .pubKey(profile.getPubKey())
+                .name(profile.getName())
+                .phoneNum(profile.getPhoneNum())
+                .isArbitrator(profile.getIsArbitrator())
+                .created(LocalDateTime.now())
+                .updated(LocalDateTime.now())
+                .build();
+
+        return profileRepository.save(newProfile);
     }
 
     public Iterable<Profile> read(Boolean isArbitrator) {
         if (isArbitrator == null) {
-            return profileRepo.findAll();
+            return profileRepository.findAll();
         } else {
-            return profileRepo.findByIsArbitrator(isArbitrator);
+            return profileRepository.findByIsArbitrator(isArbitrator);
         }
     }
 
     public Profile update(String pubkey, Profile profile) {
-        Optional<Profile> found = profileRepo.findOneByPubKey(pubkey);
+        Optional<Profile> foundProfile = profileRepository.findOneByPubKey(pubkey);
+        if (foundProfile.isPresent()) {
+            Profile.ProfileBuilder updatedProfile = Profile.builder()
+                    .pubKey(foundProfile.get().getPubKey())
+                    .name(foundProfile.get().getName())
+                    .phoneNum(foundProfile.get().getPhoneNum())
+                    .isArbitrator(foundProfile.get().getIsArbitrator())
+                    .created(foundProfile.get().getCreated())
+                    .updated(LocalDateTime.now());
 
-        if (found.isPresent()) {
             if (profile.getIsArbitrator() != null) {
-                found.get().setIsArbitrator(profile.getIsArbitrator());
+                updatedProfile.isArbitrator(profile.getIsArbitrator());
             }
             if (profile.getName() != null) {
-                found.get().setName(profile.getName());
+                updatedProfile.name(profile.getName());
             }
             if (profile.getPhoneNum() != null) {
-                found.get().setPhoneNum(profile.getPhoneNum());
+                updatedProfile.phoneNum(profile.getPhoneNum());
             }
-            found.get().setUpdated(LocalDateTime.now());
-            return profileRepo.save(found.get());
+            return profileRepository.save(updatedProfile.build());
         } else {
             // if not found create new
-            profile.setPubKey(pubkey);
             return create(profile);
         }
     }

@@ -1,4 +1,4 @@
-package com.bytabit.server.profile;
+package com.bytabit.server.trade;
 
 import lombok.*;
 
@@ -15,20 +15,16 @@ import java.time.LocalDateTime;
 @ToString
 @Entity
 @Table
-public class Profile {
+public class PaymentRequest {
 
     @Id
-    private String pubKey;
+    private String escrowAddress;
 
     @Column(nullable = false)
-    @Builder.Default
-    private Boolean isArbitrator = false;
+    private String fundingTxHash;
 
-    @Column
-    private String name;
-
-    @Column
-    private String phoneNum;
+    @Column(nullable = false)
+    private String paymentDetails;
 
     @Column(nullable = false)
     private LocalDateTime created;

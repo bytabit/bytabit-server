@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface ProfileRepository extends CrudRepository<Profile, Long> {
+interface ProfileRepository extends CrudRepository<Profile, String> {
 
     Optional<Profile> findOneByPubKey(String pubKey);
 

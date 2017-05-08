@@ -3,18 +3,34 @@ package com.bytabit.server.offer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 
 @Service
+@Transactional
 public class SellOfferService {
 
+    private final SellOfferRepository sellOfferRepository;
+
     @Autowired
-    private SellOfferRepository sellOfferRepository;
+    public SellOfferService(SellOfferRepository sellOfferRepository) {
+        this.sellOfferRepository = sellOfferRepository;
+    }
 
     public SellOffer create(SellOffer sellOffer) {
-        sellOffer.setCreated(LocalDateTime.now());
-        sellOffer.setUpdated(LocalDateTime.now());
-        return sellOfferRepository.save(sellOffer);
+        SellOffer newSellOffer = SellOffer.builder()
+                .sellerProfilePubKey(sellOffer.getSellerProfilePubKey())
+                .sellerEscrowPubKey(sellOffer.getSellerEscrowPubKey())
+                .arbitratorProfilePubKey(sellOffer.getArbitratorProfilePubKey())
+                .currencyCode(sellOffer.getCurrencyCode())
+                .paymentMethod(sellOffer.getPaymentMethod())
+                .price(sellOffer.getPrice())
+                .minAmount(sellOffer.getMinAmount())
+                .maxAmount(sellOffer.getMaxAmount())
+                .created(LocalDateTime.now())
+                .updated(LocalDateTime.now())
+                .build();
+        return sellOfferRepository.save(newSellOffer);
     }
 
     public Iterable<SellOffer> read() {
@@ -22,28 +38,41 @@ public class SellOfferService {
     }
 
     public SellOffer update(String sellerEscrowPubkey, SellOffer sellOffer) {
-        SellOffer saved = sellOfferRepository.findOne(sellerEscrowPubkey);
-        if (saved != null) {
+        assert (sellerEscrowPubkey.equals(sellOffer.getSellerEscrowPubKey()));
+        SellOffer foundSellOffer = sellOfferRepository.findOne(sellerEscrowPubkey);
+        if (foundSellOffer != null) {
+            SellOffer.SellOfferBuilder updatedSellOffer = SellOffer.builder();
+            updatedSellOffer
+                    .sellerProfilePubKey(foundSellOffer.getSellerProfilePubKey())
+                    .sellerEscrowPubKey(foundSellOffer.getSellerEscrowPubKey())
+                    .arbitratorProfilePubKey(foundSellOffer.getArbitratorProfilePubKey())
+                    .currencyCode(foundSellOffer.getCurrencyCode())
+                    .paymentMethod(foundSellOffer.getPaymentMethod())
+                    .price(foundSellOffer.getPrice())
+                    .minAmount(foundSellOffer.getMinAmount())
+                    .maxAmount(foundSellOffer.getMaxAmount())
+                    .created(foundSellOffer.getCreated())
+                    .updated(LocalDateTime.now());
+
             if (sellOffer.getCurrencyCode() != null) {
-                saved.setCurrencyCode(sellOffer.getCurrencyCode());
+                updatedSellOffer.currencyCode(sellOffer.getCurrencyCode());
             }
             if (sellOffer.getPaymentMethod() != null) {
-                saved.setPaymentMethod(sellOffer.getPaymentMethod());
+                updatedSellOffer.paymentMethod(sellOffer.getPaymentMethod());
             }
             if (sellOffer.getMinAmount() != null) {
-                saved.setMinAmount(sellOffer.getMinAmount());
+                updatedSellOffer.minAmount(sellOffer.getMinAmount());
             }
             if (sellOffer.getMaxAmount() != null) {
-                saved.setMaxAmount(sellOffer.getMaxAmount());
+                updatedSellOffer.maxAmount(sellOffer.getMaxAmount());
             }
             if (sellOffer.getPrice() != null) {
-                saved.setPrice(sellOffer.getPrice());
+                updatedSellOffer.price(sellOffer.getPrice());
             }
-            saved.setUpdated(LocalDateTime.now());
-            return sellOfferRepository.save(saved);
+            return sellOfferRepository.save(updatedSellOffer.build());
+        } else {
+            return create(sellOffer);
         }
-        // TODO get or throw once exception handling in place
-        return saved;
     }
 
     public void delete(String sellerEscrowPubkey) {
