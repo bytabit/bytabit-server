@@ -24,7 +24,7 @@ public class PayoutRequest {
     private String paymentReference;
 
     @Column(nullable = false)
-    private String payoutSignature;
+    private String payoutTxSignature;
 
     @Column(nullable = false)
     private LocalDateTime created;

@@ -18,7 +18,7 @@ public class PayoutRequestService {
         PayoutRequest newPayoutRequest = PayoutRequest.builder()
                 .escrowAddress(payoutRequest.getEscrowAddress())
                 .paymentReference(payoutRequest.getPaymentReference())
-                .payoutSignature(payoutRequest.getPayoutSignature())
+                .payoutTxSignature(payoutRequest.getPayoutTxSignature())
                 .created(LocalDateTime.now())
                 .updated(LocalDateTime.now())
                 .build();
@@ -36,14 +36,14 @@ public class PayoutRequestService {
             PayoutRequest.PayoutRequestBuilder updatedPayoutRequest = PayoutRequest.builder()
                     .escrowAddress(foundPayoutRequest.getEscrowAddress())
                     .paymentReference(foundPayoutRequest.getPaymentReference())
-                    .payoutSignature(foundPayoutRequest.getPayoutSignature())
+                    .payoutTxSignature(foundPayoutRequest.getPayoutTxSignature())
                     .created(foundPayoutRequest.getCreated())
                     .updated(LocalDateTime.now());
             if (payoutRequest.getPaymentReference() != null) {
                 updatedPayoutRequest.paymentReference(payoutRequest.getPaymentReference());
             }
-            if (payoutRequest.getPayoutSignature() != null) {
-                updatedPayoutRequest.payoutSignature(payoutRequest.getPayoutSignature());
+            if (payoutRequest.getPayoutTxSignature() != null) {
+                updatedPayoutRequest.payoutTxSignature(payoutRequest.getPayoutTxSignature());
             }
             return payoutRequestRepository.save(updatedPayoutRequest.build());
         } else {
