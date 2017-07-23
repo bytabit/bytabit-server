@@ -29,6 +29,6 @@ class BuyRequestController {
 
     @RequestMapping(method = GET, produces = "application/json")
     public List<BuyRequest> read(@PathVariable String sellerEscrowPubkey) {
-        return buyRequestService.read(sellerEscrowPubkey);
+        return buyRequestService.readForOffer(sellerEscrowPubkey);
     }
 }

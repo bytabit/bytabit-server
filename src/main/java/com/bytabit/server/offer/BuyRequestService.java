@@ -22,6 +22,7 @@ public class BuyRequestService {
         assert (sellerEscrowPubkey.equals(buyRequest.getSellerEscrowPubKey()));
 
         BuyRequest newBuyRequest = BuyRequest.builder()
+                .escrowAddress(buyRequest.getEscrowAddress())
                 .btcAmount(buyRequest.getBtcAmount())
                 .buyerEscrowPubKey(buyRequest.getBuyerEscrowPubKey())
                 .buyerProfilePubKey(buyRequest.getBuyerProfilePubKey())
@@ -32,7 +33,11 @@ public class BuyRequestService {
         return buyRequestRepository.save(newBuyRequest);
     }
 
-    public List<BuyRequest> read(String sellerEscrowPubKey) {
+    public BuyRequest read(String escrowAddress) {
+        return buyRequestRepository.findOne(escrowAddress);
+    }
+
+    public List<BuyRequest> readForOffer(String sellerEscrowPubKey) {
         return buyRequestRepository.findBySellerEscrowPubKey(sellerEscrowPubKey);
     }
 

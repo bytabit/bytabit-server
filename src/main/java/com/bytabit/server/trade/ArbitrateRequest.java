@@ -1,4 +1,4 @@
-package com.bytabit.server.offer;
+package com.bytabit.server.trade;
 
 import lombok.*;
 
@@ -6,7 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Builder
@@ -16,25 +15,16 @@ import java.time.LocalDateTime;
 @ToString
 @Entity
 @Table
-public class BuyRequest {
+public class ArbitrateRequest {
 
     @Id
     private String escrowAddress;
 
     @Column(nullable = false)
-    private String buyerEscrowPubKey;
+    private String arbitratorProfilePubKey;
 
     @Column(nullable = false)
-    private String sellerEscrowPubKey;
-
-    @Column(nullable = false, precision = 20, scale = 8)
-    private BigDecimal btcAmount;
-
-    @Column(nullable = false)
-    private String buyerProfilePubKey;
-
-    @Column(nullable = false)
-    private String buyerPayoutAddress;
+    private String reason;
 
     @Column(nullable = false)
     private LocalDateTime created;
@@ -42,4 +32,3 @@ public class BuyRequest {
     @Column(nullable = false)
     private LocalDateTime updated;
 }
-

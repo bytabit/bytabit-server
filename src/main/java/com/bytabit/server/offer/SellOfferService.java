@@ -33,6 +33,10 @@ public class SellOfferService {
         return sellOfferRepository.save(newSellOffer);
     }
 
+    public SellOffer read(String sellerEscrowPubKey) {
+        return sellOfferRepository.findOne(sellerEscrowPubKey);
+    }
+
     public Iterable<SellOffer> read() {
         return sellOfferRepository.findAll();
     }
