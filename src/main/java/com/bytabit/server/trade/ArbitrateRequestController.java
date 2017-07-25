@@ -31,4 +31,11 @@ class ArbitrateRequestController {
     public List<ArbitrateRequest> read(@PathVariable String arbitratorProfilePubKey) {
         return arbitrateRequestService.readForArbitrator(arbitratorProfilePubKey);
     }
+
+    @RequestMapping(value = "/{escrowAddress}", method = GET, produces = "application/json")
+    public ArbitrateRequest read(@PathVariable String arbitratorProfilePubKey,
+                                 @PathVariable String escrowAddress) {
+        // TODO verify returned ArbitratorRequest is for arbitratorProfilePubKey
+        return arbitrateRequestService.read(escrowAddress);
+    }
 }

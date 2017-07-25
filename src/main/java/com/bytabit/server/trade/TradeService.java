@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional
@@ -56,5 +58,38 @@ public class TradeService {
         }
 
         return null;
+    }
+
+    public List<Trade> readAll(String arbitratorProfilePubKey) {
+
+        List<ArbitrateRequest> arbitrateRequests = arbitrateRequestService.readForArbitrator(arbitratorProfilePubKey);
+
+        List<Trade> trades = new ArrayList<>();
+
+        for (ArbitrateRequest arbitrateRequest : arbitrateRequests) {
+            String escrowAddress = arbitrateRequest.getEscrowAddress();
+            BuyRequest buyRequest = buyRequestService.read(escrowAddress);
+
+            if (null != buyRequest && null != buyRequest.getSellerEscrowPubKey()
+                    && !buyRequest.getSellerEscrowPubKey().isEmpty()) {
+
+                SellOffer sellOffer = sellOfferService.read(buyRequest.getSellerEscrowPubKey());
+                PaymentRequest paymentRequest = paymentRequestService.read(escrowAddress);
+                PayoutRequest payoutRequest = payoutRequestService.read(escrowAddress);
+                PayoutCompleted payoutCompleted = payoutCompletedService.read(escrowAddress);
+
+                trades.add(Trade.builder()
+                        .escrowAddress(buyRequest.getEscrowAddress())
+                        .buyRequest(buyRequest)
+                        .sellOffer(sellOffer)
+                        .paymentRequest(paymentRequest)
+                        .payoutRequest(payoutRequest)
+                        .payoutCompleted(payoutCompleted)
+                        .arbitrateRequest(arbitrateRequest)
+                        .build());
+            }
+        }
+
+        return trades;
     }
 }
