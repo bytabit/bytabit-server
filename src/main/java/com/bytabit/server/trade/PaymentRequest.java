@@ -27,6 +27,12 @@ public class PaymentRequest {
     private String paymentDetails;
 
     @Column(nullable = false)
+    private String refundAddress;
+
+    @Column(nullable = false)
+    private String refundTxSignature;
+
+    @Column(nullable = false)
     private LocalDateTime created;
 
     @Column(nullable = false)

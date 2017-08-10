@@ -24,6 +24,9 @@ public class PayoutCompleted {
     private String payoutTxHash;
 
     @Column(nullable = false)
+    private String reason;
+
+    @Column(nullable = false)
     private LocalDateTime created;
 
     @Column(nullable = false)

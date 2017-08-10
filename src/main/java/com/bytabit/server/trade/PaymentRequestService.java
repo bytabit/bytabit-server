@@ -19,6 +19,8 @@ public class PaymentRequestService {
                 .escrowAddress(paymentRequest.getEscrowAddress())
                 .fundingTxHash(paymentRequest.getFundingTxHash())
                 .paymentDetails(paymentRequest.getPaymentDetails())
+                .refundAddress(paymentRequest.getRefundAddress())
+                .refundTxSignature(paymentRequest.getRefundTxSignature())
                 .created(LocalDateTime.now())
                 .updated(LocalDateTime.now())
                 .build();
@@ -37,13 +39,22 @@ public class PaymentRequestService {
                     .escrowAddress(foundPaymentRequest.getEscrowAddress())
                     .fundingTxHash(foundPaymentRequest.getFundingTxHash())
                     .paymentDetails(foundPaymentRequest.getPaymentDetails())
+                    .refundAddress(foundPaymentRequest.getRefundAddress())
+                    .refundTxSignature(foundPaymentRequest.getRefundTxSignature())
                     .created(foundPaymentRequest.getCreated())
                     .updated(LocalDateTime.now());
+
             if (paymentRequest.getFundingTxHash() != null) {
                 updatedPaymentRequest.fundingTxHash(paymentRequest.getFundingTxHash());
             }
             if (paymentRequest.getPaymentDetails() != null) {
                 updatedPaymentRequest.paymentDetails(paymentRequest.getPaymentDetails());
+            }
+            if (paymentRequest.getRefundAddress() != null) {
+                updatedPaymentRequest.refundAddress(paymentRequest.getRefundAddress());
+            }
+            if (paymentRequest.getRefundTxSignature() != null) {
+                updatedPaymentRequest.refundTxSignature(paymentRequest.getRefundTxSignature());
             }
             return paymentRequestRepository.save(updatedPaymentRequest.build());
         } else {

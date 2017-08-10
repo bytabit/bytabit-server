@@ -18,6 +18,7 @@ public class PayoutCompletedService {
         PayoutCompleted newPayoutCompleted = PayoutCompleted.builder()
                 .escrowAddress(payoutCompleted.getEscrowAddress())
                 .payoutTxHash(payoutCompleted.getPayoutTxHash())
+                .reason(payoutCompleted.getReason())
                 .created(LocalDateTime.now())
                 .updated(LocalDateTime.now())
                 .build();
